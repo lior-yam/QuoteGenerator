@@ -491,6 +491,18 @@ async function assetToDataUri(imagePath) {
   return localFileToDataUri(imagePath);
 }
 
+async function assetToPublicUrl(imagePath) {
+  const normalizedPath = String(imagePath || "")
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+
+  if (/^(?:data:|https?:\/\/)/.test(normalizedPath)) {
+    return normalizedPath;
+  }
+
+  return `/${normalizedPath.split("/").map(encodeURIComponent).join("/")}`;
+}
+
 async function createProduct(event) {
   const data = readBodyJson(event);
   const packageData = validatePackageInput(data);
@@ -664,7 +676,8 @@ async function saveQuote(event) {
   const { html: quoteHtml } = await createQuoteHtml({
     quoteData,
     products,
-    assetToDataUri
+    assetToDataUri: isNetlifyRuntime() ? assetToPublicUrl : assetToDataUri,
+    showPrintTools: isNetlifyRuntime()
   });
   const quoteKey = `${quoteData.quoteNumber}-${Date.now()}`;
 

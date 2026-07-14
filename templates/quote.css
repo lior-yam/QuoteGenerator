@@ -17,6 +17,25 @@ body {
   line-height: 1.45;
 }
 
+.print-toolbar {
+  width: 210mm;
+  margin: 0 auto;
+  padding: 12px 0;
+  display: flex;
+  justify-content: flex-start;
+  background: #ece7de;
+}
+
+.print-toolbar button {
+  border: 0;
+  border-radius: 6px;
+  background: #2f2a25;
+  color: #fffaf2;
+  cursor: pointer;
+  font: 700 14px Arial, "Noto Sans Hebrew", "Segoe UI", sans-serif;
+  padding: 10px 18px;
+}
+
 .page {
   width: 210mm;
   min-height: 297mm;
@@ -372,4 +391,10 @@ td {
   gap: 1.5mm 8mm;
   color: #5b524b;
   font-size: 8.8pt;
+}
+
+@media print {
+  .print-toolbar {
+    display: none !important;
+  }
 }

@@ -174,7 +174,7 @@ async function buildProductRows(items, assetToDataUri) {
         <tr>
           <td>
             <span class="product-image">
-              <img src="${imageSrc}" alt="${escapeHtml(item.productName)}">
+              <img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.productName)}">
             </span>
           </td>
           <td class="product-name">${escapeHtml(item.productName)}</td>
@@ -278,7 +278,15 @@ function calculateTotals(items) {
   };
 }
 
-async function createQuoteHtml({ quoteData, products, assetToDataUri = localFileToDataUri }) {
+function buildPrintTools() {
+  return `
+    <div class="print-toolbar">
+      <button type="button" onclick="window.print()">הדפס / שמור PDF</button>
+    </div>
+  `;
+}
+
+async function createQuoteHtml({ quoteData, products, assetToDataUri = localFileToDataUri, showPrintTools = false }) {
   validateQuoteData(quoteData);
 
   const items = buildQuoteItems(quoteData, products);
@@ -296,6 +304,7 @@ async function createQuoteHtml({ quoteData, products, assetToDataUri = localFile
   return {
     html: replaceTokens(template, {
       CSS: css,
+      PRINT_TOOLS: showPrintTools ? buildPrintTools() : "",
       LOGO_SRC: logoSrc,
       QUOTE_NUMBER: escapeHtml(quoteData.quoteNumber || "AS-0001"),
       RECIPIENT_COMPANY: escapeHtml(quoteData.recipientCompany),
