@@ -302,6 +302,22 @@ function quotePayload() {
   };
 }
 
+async function readApiResponse(response) {
+  const text = await response.text();
+
+  if (!text) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    return {
+      error: text.slice(0, 500)
+    };
+  }
+}
+
 packageSearch.addEventListener("input", renderPackageOptions);
 addPackage.addEventListener("click", addSelectedPackage);
 
@@ -340,7 +356,7 @@ quoteForm.addEventListener("submit", async (event) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(quotePayload())
     });
-    const result = await response.json();
+    const result = await readApiResponse(response);
 
     if (!response.ok) {
       throw new Error(result.error || "יצירת ההצעה נכשלה.");
