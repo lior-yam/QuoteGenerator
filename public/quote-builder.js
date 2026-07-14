@@ -347,8 +347,8 @@ quoteForm.addEventListener("submit", async (event) => {
   const button = quoteForm.querySelector(".primary-button");
   button.disabled = true;
   pdfLink.classList.remove("is-visible");
-  pdfLink.textContent = "פתח PDF";
-  setStatus("יוצר PDF...");
+  pdfLink.textContent = "פתח הצעה";
+  setStatus("יוצר הצעה...");
 
   try {
     const response = await fetch("/api/quotes", {
