@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title">
+  <title id="title">Brass desk lamp</title>
+  <rect width="800" height="800" fill="#eee7dd"/>
+  <circle cx="594" cy="214" r="104" fill="#2f2a25" opacity="0.12"/>
+  <path d="M332 610h162c43 0 78 35 78 78H254c0-43 35-78 78-78z" fill="#8d6335"/>
+  <path d="M414 348v282" stroke="#b98545" stroke-width="30" stroke-linecap="round"/>
+  <path d="M348 195h250c0 80-56 145-125 145s-125-65-125-145z" fill="#c9964c"/>
+  <path d="M348 195c20-48 68-80 125-80s105 32 125 80H348z" fill="#d8ab67"/>
+  <path d="M364 217h215" stroke="#f3cf8b" stroke-width="16" stroke-linecap="round" opacity="0.7"/>
+  <path d="M376 340l-102 158" stroke="#b98545" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="268" cy="510" r="32" fill="#8d6335"/>
+</svg>

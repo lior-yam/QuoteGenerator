@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title>הצעת מחיר</title>
+    <style>
+      {{CSS}}
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="quote-header">
+        <div class="brand-block">
+          <img class="logo" src="{{LOGO_SRC}}" alt="Asufa">
+          <p class="brand-subtitle">מארזים ומתנות לעסקים בעיצוב ישראלי</p>
+        </div>
+        <div class="quote-meta">
+          <span>מספר הצעה</span>
+          <strong>{{QUOTE_NUMBER}}</strong>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Asufa Quote</p>
+          <h1>הצעת מחיר</h1>
+        </div>
+        <div class="recipient-card">
+          <div>
+            <span>לכבוד</span>
+            <strong>{{RECIPIENT_COMPANY}}</strong>
+          </div>
+          {{CONTACT_PERSON_BLOCK}}
+          {{RECIPIENT_PHONE_BLOCK}}
+          {{RECIPIENT_EMAIL_BLOCK}}
+          <div>
+            <span>תאריך</span>
+            <strong>{{QUOTE_DATE}}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-section" aria-label="מארזים בהצעת המחיר">
+        <table>
+          <thead>
+            <tr>
+              <th class="image-column">תמונה</th>
+              <th class="package-column">מארז</th>
+              <th class="description-column">מה יש במארז</th>
+              <th class="quantity-column numeric">כמות</th>
+              <th class="price-column numeric">מחיר יחידה</th>
+              <th class="total-column numeric">סה״כ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{PRODUCT_ROWS}}
+          </tbody>
+        </table>
+      </section>
+
+      <section class="summary-section {{SUMMARY_CLASS}}">
+        <div class="notes">
+          <h2>הערות</h2>
+          {{NOTES_BLOCK}}
+        </div>
+        {{TOTALS_BLOCK}}
+      </section>
+
+      <footer class="quote-footer">
+        <div>
+          <span>פרטי התקשרות</span>
+          <strong>{{CONTACT_NAME}}</strong>
+        </div>
+        <div class="contact-grid">
+          <span>{{CONTACT_ADDRESS}}</span>
+          <span>{{CONTACT_PHONE}}</span>
+          <span>{{CONTACT_EMAIL}}</span>
+          <span>{{CONTACT_WEBSITE}}</span>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

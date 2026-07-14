@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title">
+  <title id="title">White ceramic vase</title>
+  <rect width="800" height="800" fill="#e7dfd2"/>
+  <circle cx="612" cy="145" r="105" fill="#b95f44" opacity="0.9"/>
+  <rect x="90" y="575" width="620" height="70" rx="35" fill="#cfc2b2"/>
+  <path d="M337 180h126c-15 72 12 112 49 168 39 58 59 114 47 188-14 85-77 130-159 130s-145-45-159-130c-12-74 8-130 47-188 37-56 64-96 49-168z" fill="#fbfaf7"/>
+  <path d="M349 166h102c13 0 24 11 24 24v8c0 13-11 24-24 24H349c-13 0-24-11-24-24v-8c0-13 11-24 24-24z" fill="#f6f1ea"/>
+  <path d="M296 532c19 62 61 92 104 92 54 0 99-37 113-104" fill="none" stroke="#d7cfc5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M424 246c25 63 72 107 82 182" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" opacity="0.7"/>
+</svg>

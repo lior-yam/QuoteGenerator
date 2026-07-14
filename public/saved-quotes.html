@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>הצעות שמורות - אסופה</title>
+    <link rel="stylesheet" href="/products.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <img src="/assets/asufa-logo.png" alt="אסופה" class="logo">
+        <div>
+          <h1>הצעות שמורות</h1>
+          <p>פתיחה לעריכה, שכפול וחזרה ל-PDF האחרון</p>
+        </div>
+        <nav class="nav-links" aria-label="ניווט">
+          <a href="/products">בנק מארזים</a>
+          <a href="/components">בנק מוצרים</a>
+          <a href="/quote">יצירת הצעה</a>
+          <a href="/quotes" aria-current="page">הצעות שמורות</a>
+        </nav>
+      </header>
+
+      <section class="panel saved-quotes-panel">
+        <div class="list-heading">
+          <div>
+            <h2>כל ההצעות</h2>
+            <p>כל יצירת PDF נשמרת כאן לפי שם החברה.</p>
+          </div>
+          <a class="new-quote-link" href="/quote">הצעה חדשה</a>
+        </div>
+
+        <div class="field saved-quotes-search">
+          <label for="quoteSearch">חיפוש לפי חברה / איש קשר / מספר הצעה</label>
+          <input id="quoteSearch" type="search" placeholder="חיפוש הצעה">
+        </div>
+
+        <p class="status" id="status" role="status"></p>
+
+        <div class="table-wrap">
+          <table class="data-table saved-quotes-table">
+            <thead>
+              <tr>
+                <th>חברה</th>
+                <th>תאריך הצעה</th>
+                <th>עודכן</th>
+                <th>מארזים</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody id="savedQuotesBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/saved-quotes.js"></script>
+  </body>
+</html>

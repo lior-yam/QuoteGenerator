@@ -1,0 +1,61 @@
+[
+  {
+    "id": "quote-1783951239780-00bc76",
+    "createdAt": "2026-07-13T14:00:39.783Z",
+    "updatedAt": "2026-07-13T14:00:39.783Z",
+    "quoteNumber": "AS-2026-35311",
+    "recipientCompany": "הלשכה המרכזית לסטטיסטיקה",
+    "contactPerson": "ליטל כהן סריג",
+    "customerPhone": "0506235350",
+    "customerEmail": "Litals72@gmail.com",
+    "quoteDate": "2026-07-13",
+    "showTotals": true,
+    "notes": [
+      "כל המחירים ללא מע״מ.",
+      "תוקף ההצעה 14 יום.",
+      "משלוח למשרדים - חינם"
+    ],
+    "selectedProducts": [
+      {
+        "id": "package-1783951133762-d52da2",
+        "quantity": 30
+      }
+    ],
+    "pdfUrl": "/output/quotes/quote-1783951239780-00bc76.pdf"
+  },
+  {
+    "id": "quote-1783946831297-d180d0",
+    "createdAt": "2026-07-13T12:47:11.302Z",
+    "updatedAt": "2026-07-13T12:47:44.691Z",
+    "quoteNumber": "AS-2026-19941",
+    "recipientCompany": "ארט ליסט",
+    "contactPerson": "מעיין בקל",
+    "customerPhone": "0524423511",
+    "customerEmail": "Maayan.bakal@artlist.io",
+    "quoteDate": "2026-07-13",
+    "showTotals": false,
+    "notes": [
+      "משלוח למשרדים בגוש דן ללא עלות.",
+      "ניתן לעשות שינויים במרכיבי המארז.",
+      "יש מגוון אפשרויות מיתוג.",
+      "כל המוצרים בעלי תעודת כשרות.",
+      "כל המחירים ללא מע״מ.",
+      "תוקף ההצעה 14 יום."
+    ],
+    "selectedProducts": [
+      {
+        "id": "package-1783850931332-ec19a9",
+        "quantity": 200
+      },
+      {
+        "id": "package-1783946558808-7369c1",
+        "quantity": 200
+      },
+      {
+        "id": "package-1783946661289-f13c30",
+        "quantity": 200
+      }
+    ],
+    "pdfUrl": "/output/quotes/quote-1783946831297-d180d0.pdf"
+  }
+]

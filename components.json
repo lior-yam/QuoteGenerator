@@ -1,0 +1,122 @@
+[
+  {
+    "id": "component-honey-130",
+    "componentName": "דבש בוטיק 130 גרם",
+    "defaultText": "**דבש בוטיק** 130 גרם - בד\"צ עד\"ח",
+    "category": "מזון"
+  },
+  {
+    "id": "component-honey-stick",
+    "componentName": "מקל דבש",
+    "defaultText": "מקל דבש",
+    "category": "מזון"
+  },
+  {
+    "id": "component-diffuser-100",
+    "componentName": "מפיץ ריח 100 מ״ל",
+    "defaultText": "מפיץ ריח **100 מ״ל**",
+    "category": "בית וריח"
+  },
+  {
+    "id": "component-rooting-vase",
+    "componentName": "רוטא כלי להשרשה",
+    "defaultText": "**רוטא **כלי להשרשה",
+    "category": "בית ועיצוב"
+  },
+  {
+    "id": "component-wine-desert",
+    "componentName": "יין מדבר",
+    "defaultText": "**יין מדבר** - אדום/לבן/רוזה",
+    "category": "יין"
+  },
+  {
+    "id": "component-greeting-card",
+    "componentName": "כרטיס ברכה ממותג",
+    "defaultText": "**כרטיס ברכה** ממותג",
+    "category": "מיתוג"
+  },
+  {
+    "id": "component-branded-box",
+    "componentName": "מארז קרטון מהודר",
+    "defaultText": "מארז קרטון מהודר",
+    "category": "אריזה"
+  },
+  {
+    "id": "component-1783856830042-b3ef24",
+    "componentName": "צלחת דגים - גיפטס פור גוד",
+    "defaultText": "**צלחת דגים** - גיפטס פור גוד",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783858011286-81d948",
+    "componentName": "דבש בוטיק 250 גרם",
+    "defaultText": "**דבש **בוטיק 250 גרם - בד\"צ עד\"ח",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783931075695-06a5a7",
+    "componentName": "שמן זית 250 מ\"ל",
+    "defaultText": "**שמן זית** תוצרת - 250 מ\"ל - בד\"ץ מחזיקי הדת",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783931198266-b2590e",
+    "componentName": "שוקולד כוורת",
+    "defaultText": "**שוקולד כוורת** - עמותת גוונים של מתוק - גיפטס פוס גוד",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783939610882-6245b0",
+    "componentName": "נר 100 מל תוצרת",
+    "defaultText": "**נר תוצרת** - 100 מ\"ל - פרדס\\מטע\\שדה",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783939674027-8bfeb2",
+    "componentName": "מחברת מתכונים",
+    "defaultText": "**מחברת מתכונים** - תוצרת",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783940865004-1879b8",
+    "componentName": "עציץ סאמוור + סוקולנט",
+    "defaultText": "**עציץ **סאמוור + **סוקולנט**",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783940954854-4622fe",
+    "componentName": "ממרח פתורה",
+    "defaultText": "**ממרח פתורה** - לימון כבוש\\טפנד זיתים ועוד - רבנות",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783944527946-9028fe",
+    "componentName": "אבוקדו",
+    "defaultText": "**כלי להנבטת אבוקדו** מזכוכית - הילה שמיע",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783944559442-37b0e7",
+    "componentName": "מיינדפולנס",
+    "defaultText": "הרגלים פשוטים לתרגול **מיינדפולנס **- צילה זק",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783946448451-032d45",
+    "componentName": "שלישיית נרות תוצרת",
+    "defaultText": "שלישיית **נרות תוצרת** - 100 מ\"ל - פרדס, מטע ושדה",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783955476829-221143",
+    "componentName": "חמסה קרמיקה",
+    "defaultText": "חמסה קרמיקה - עמותת הבית של סוזן",
+    "category": "כללי"
+  },
+  {
+    "id": "component-1783955512206-b98ede",
+    "componentName": "אסקיו התפתחות אישית",
+    "defaultText": "מארז קלפים התפתחות אישית - אסקיו",
+    "category": "כללי"
+  }
+]

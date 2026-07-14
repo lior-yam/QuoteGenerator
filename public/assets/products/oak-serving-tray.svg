@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title">
+  <title id="title">Oak serving tray</title>
+  <rect width="800" height="800" fill="#f0ebe3"/>
+  <rect x="120" y="255" width="560" height="300" rx="56" fill="#b98254"/>
+  <rect x="158" y="293" width="484" height="224" rx="38" fill="#d5a16d"/>
+  <path d="M168 348h465M168 409h465M168 470h465" stroke="#9b6842" stroke-width="10" opacity="0.45"/>
+  <path d="M230 235c-34 0-62 28-62 62" fill="none" stroke="#6f4930" stroke-width="22" stroke-linecap="round"/>
+  <path d="M570 235c34 0 62 28 62 62" fill="none" stroke="#6f4930" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="180" cy="615" r="90" fill="#2f2a25" opacity="0.12"/>
+  <circle cx="620" cy="175" r="74" fill="#a45a3b" opacity="0.18"/>
+</svg>

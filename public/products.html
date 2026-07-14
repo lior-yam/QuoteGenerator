@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>בנק מארזים - אסופה</title>
+    <link rel="stylesheet" href="/products.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <img src="/assets/asufa-logo.png" alt="אסופה" class="logo">
+        <div>
+          <h1>בנק מארזים</h1>
+          <p>הקמת מארזים, תמונות, תכולה ומחירים להצעות מחיר</p>
+        </div>
+        <nav class="nav-links" aria-label="ניווט">
+          <a href="/products" aria-current="page">בנק מארזים</a>
+          <a href="/components">בנק מוצרים</a>
+          <a href="/quote">יצירת הצעה</a>
+          <a href="/quotes">הצעות שמורות</a>
+        </nav>
+      </header>
+
+      <section class="layout">
+        <form class="panel form-panel" id="packageForm">
+          <h2 id="formTitle">הקמת מארז חדש</h2>
+
+          <div class="field">
+            <label for="productName">שם המארז</label>
+            <input id="productName" name="productName" type="text" required placeholder="לדוגמה: מארז תודה קטן">
+          </div>
+
+          <div class="field">
+            <label for="imageFile">תמונה</label>
+            <input id="imageFile" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" required>
+            <small class="hint">אפשר להעלות PNG, JPG, WEBP או SVG. תמונות גדולות יוקטנו אוטומטית.</small>
+            <div class="image-preview" id="imagePreview">
+              <span>תצוגה מקדימה</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="shortDescription">מה יש במארז</label>
+            <div class="formatting-toolbar" aria-label="עיצוב טקסט">
+              <button class="format-button" type="button" id="boldDescription" title="הדגשה">
+                <strong>B</strong>
+              </button>
+            </div>
+            <textarea id="shortDescription" name="shortDescription" rows="5" required placeholder="כתבי כל פריט בשורה נפרדת&#10;לדוגמה:&#10;דבש בוטיק 130 גרם&#10;מפיץ ריח 100 מ״ל&#10;כרטיס ברכה ממותג"></textarea>
+            <small class="hint">כל שורה תוצג כבולט נפרד בהצעה.</small>
+          </div>
+
+          <div class="component-picker" aria-label="הוספת מוצר מתוך הבנק">
+            <div class="field">
+              <label for="componentSearch">הוסף מוצר מתוך הבנק</label>
+              <input id="componentSearch" type="search" placeholder="חיפוש מוצר חוזר">
+            </div>
+            <div class="field">
+              <label for="componentSelect">מוצר</label>
+              <select id="componentSelect"></select>
+            </div>
+            <button class="secondary-button" type="button" id="addComponentToPackage">הוסף למארז</button>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="unitPrice">מחיר לפני מע״מ</label>
+              <input id="unitPrice" name="unitPrice" type="number" min="1" step="0.01" required placeholder="280">
+            </div>
+            <div class="field">
+              <label for="category">קטגוריה</label>
+              <input id="category" name="category" type="text" placeholder="מארזים עסקיים">
+            </div>
+          </div>
+
+          <button type="submit" id="submitButton">שמור מארז</button>
+          <button class="ghost-button" type="button" id="cancelEdit" hidden>בטל עריכה</button>
+          <p class="status" id="status" role="status"></p>
+        </form>
+
+        <section class="panel list-panel">
+          <div class="list-heading">
+            <div>
+              <h2>מארזים קיימים</h2>
+              <p>בטבלת הסדר אפשר לקבוע את סדר ההופעה בבנק ובהצעת המחיר.</p>
+            </div>
+            <span id="packageCount">0 מארזים</span>
+          </div>
+
+          <div class="view-toggle" role="tablist" aria-label="תצוגת מארזים">
+            <button class="view-button is-active" type="button" id="cardViewButton" aria-selected="true">כרטיסיות</button>
+            <button class="view-button" type="button" id="tableViewButton" aria-selected="false">טבלה וסדר</button>
+          </div>
+
+          <div class="view-panel is-active" id="packageCardsView">
+            <div class="package-list" id="packageList"></div>
+          </div>
+
+          <div class="view-panel" id="packageTableView">
+            <div class="table-wrap">
+              <table class="data-table package-table">
+                <thead>
+                  <tr>
+                    <th>סדר</th>
+                    <th>תמונה</th>
+                    <th>מארז</th>
+                    <th>קטגוריה</th>
+                    <th>מחיר לפני מע״מ</th>
+                    <th>פעולות</th>
+                  </tr>
+                </thead>
+                <tbody id="packageTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/products.js"></script>
+  </body>
+</html>

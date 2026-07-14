@@ -1,0 +1,49 @@
+[build]
+  command = "npm run build"
+  publish = "public"
+
+[build.environment]
+  PUPPETEER_SKIP_DOWNLOAD = "true"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["@sparticuz/chromium"]
+  included_files = [
+    "assets/**",
+    "components.json",
+    "products.json",
+    "saved-quotes.json",
+    "templates/**",
+    "node_modules/@sparticuz/chromium/bin/**"
+  ]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/products"
+  to = "/products.html"
+  status = 200
+
+[[redirects]]
+  from = "/components"
+  to = "/components.html"
+  status = 200
+
+[[redirects]]
+  from = "/quotes"
+  to = "/saved-quotes.html"
+  status = 200
+
+[[redirects]]
+  from = "/quote"
+  to = "/quote-builder.html"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/quote-builder.html"
+  status = 200

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title">
+  <title id="title">Woven wall textile</title>
+  <rect width="800" height="800" fill="#ebe4d8"/>
+  <path d="M186 150h428" stroke="#2f2a25" stroke-width="20" stroke-linecap="round"/>
+  <rect x="225" y="170" width="350" height="450" rx="16" fill="#f8f1e6"/>
+  <path d="M260 170v450M300 170v450M340 170v450M380 170v450M420 170v450M460 170v450M500 170v450M540 170v450" stroke="#d6c9b8" stroke-width="7"/>
+  <path d="M225 240h350M225 300h350M225 360h350M225 420h350M225 480h350M225 540h350" stroke="#c4b49f" stroke-width="9"/>
+  <path d="M225 342c82-58 128-63 203-8 50 36 84 46 147 8v122c-70 38-118 28-174-16-61-48-101-46-176 8V342z" fill="#a45a3b" opacity="0.9"/>
+  <path d="M252 620l-34 88M304 620l-22 88M356 620l-12 88M408 620l4 88M460 620l16 88M512 620l28 88M564 620l40 88" stroke="#b7a891" stroke-width="10" stroke-linecap="round"/>
+</svg>

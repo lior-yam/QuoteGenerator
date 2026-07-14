@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>יצירת הצעת מחיר - אסופה</title>
+    <link rel="stylesheet" href="/quote-builder.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <img src="/assets/asufa-logo.png" alt="אסופה" class="logo">
+        <div>
+          <h1>יצירת הצעת מחיר</h1>
+          <p>בחירת מארזים מתוך הבנק והפקת PDF ללקוח</p>
+        </div>
+        <nav class="nav-links" aria-label="ניווט">
+          <a href="/products">בנק מארזים</a>
+          <a href="/components">בנק מוצרים</a>
+          <a href="/quote" aria-current="page">יצירת הצעה</a>
+          <a href="/quotes">הצעות שמורות</a>
+        </nav>
+      </header>
+
+      <form class="layout" id="quoteForm">
+        <section class="panel form-panel">
+          <h2>פרטי לקוח</h2>
+          <p class="edit-context" id="quoteEditContext"></p>
+
+          <div class="field">
+            <label for="recipientCompany">שם חברה / לקוח</label>
+            <input id="recipientCompany" name="recipientCompany" type="text" required placeholder="לדוגמה: חברת דוגמה בע״מ">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="contactPerson">איש קשר</label>
+              <input id="contactPerson" name="contactPerson" type="text" placeholder="אופציונלי">
+            </div>
+            <div class="field">
+              <label for="customerPhone">טלפון</label>
+              <input id="customerPhone" name="customerPhone" type="tel" placeholder="050-0000000">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="customerEmail">אימייל</label>
+            <input id="customerEmail" name="customerEmail" type="email" placeholder="name@company.co.il">
+          </div>
+
+          <div class="field">
+            <label for="quoteDate">תאריך הצעה</label>
+            <input id="quoteDate" name="quoteDate" type="date" required>
+          </div>
+        </section>
+
+        <section class="panel package-panel">
+          <div class="panel-heading">
+            <h2>מארזים בהצעה</h2>
+            <span id="selectedCount">0 נבחרו</span>
+          </div>
+
+          <div class="field shared-quantity-field">
+            <label for="sharedQuantity">כמות לכל המארזים</label>
+            <input id="sharedQuantity" type="number" min="1" step="1" value="1">
+          </div>
+
+          <div class="picker">
+            <div class="field">
+              <label for="packageSearch">חיפוש לפי שם</label>
+              <input id="packageSearch" type="search" placeholder="הקלידי שם מארז">
+            </div>
+            <div class="field">
+              <label for="packageSelect">בחירה מהבנק</label>
+              <select id="packageSelect"></select>
+            </div>
+            <button class="secondary-button" type="button" id="addPackage">הוסף להצעה</button>
+          </div>
+
+          <div class="selected-list" id="selectedList">
+            <div class="empty-state">עדיין לא נבחרו מארזים להצעה.</div>
+          </div>
+
+          <div class="field notes-field">
+            <label for="notes">הערות להצעה</label>
+            <div class="notes-options" aria-label="הערות לבחירה">
+              <label class="note-option">
+                <input type="checkbox" data-default-note value="משלוח למשרדים בגוש דן ללא עלות." checked>
+                <span>משלוח למשרדים בגוש דן ללא עלות.</span>
+              </label>
+              <label class="note-option">
+                <input type="checkbox" data-default-note value="ניתן לעשות שינויים במרכיבי המארז." checked>
+                <span>ניתן לעשות שינויים במרכיבי המארז.</span>
+              </label>
+              <label class="note-option">
+                <input type="checkbox" data-default-note value="יש מגוון אפשרויות מיתוג." checked>
+                <span>יש מגוון אפשרויות מיתוג.</span>
+              </label>
+              <label class="note-option">
+                <input type="checkbox" data-default-note value="כל המוצרים בעלי תעודת כשרות." checked>
+                <span>כל המוצרים בעלי תעודת כשרות.</span>
+              </label>
+              <label class="note-option">
+                <input type="checkbox" data-default-note value="כל המחירים ללא מע״מ." checked>
+                <span>כל המחירים ללא מע״מ.</span>
+              </label>
+              <label class="note-option">
+                <input type="checkbox" data-default-note value="תוקף ההצעה 14 יום." checked>
+                <span>תוקף ההצעה 14 יום.</span>
+              </label>
+            </div>
+            <label class="secondary-field-label" for="notes">הערות נוספות</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+            <small class="hint">כל שורה נוספת תהפוך לבולט נפרד ב-PDF.</small>
+          </div>
+
+          <label class="checkbox-row">
+            <input id="showTotals" name="showTotals" type="checkbox" checked>
+            <span>להציג סיכום כללי, מע״מ וסה״כ לתשלום</span>
+          </label>
+
+          <button class="primary-button" type="submit">צור PDF</button>
+          <p class="status" id="status" role="status"></p>
+          <a class="pdf-link" id="pdfLink" href="/output/quote.pdf" target="_blank" rel="noreferrer">פתח PDF</a>
+        </section>
+      </form>
+    </main>
+
+    <script src="/quote-builder.js"></script>
+  </body>
+</html>

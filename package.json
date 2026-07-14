@@ -1,0 +1,21 @@
+{
+  "name": "asufa-quote-generator",
+  "version": "1.0.0",
+  "description": "Minimal Hebrew RTL PDF quote generator for Asufa.",
+  "main": "src/generateQuote.js",
+  "scripts": {
+    "build": "node scripts/prepareNetlify.js",
+    "generate": "node src/generateQuote.js",
+    "products": "node src/productsServer.js",
+    "start": "node src/productsServer.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9",
+    "@sparticuz/chromium": "^149.0.0",
+    "puppeteer": "^24.0.0",
+    "puppeteer-core": "^25.3.0"
+  }
+}

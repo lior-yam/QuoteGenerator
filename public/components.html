@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>בנק מוצרים - אסופה</title>
+    <link rel="stylesheet" href="/products.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <img src="/assets/asufa-logo.png" alt="אסופה" class="logo">
+        <div>
+          <h1>בנק מוצרים</h1>
+          <p>מוצרים שחוזרים על עצמם בתוך מארזים</p>
+        </div>
+        <nav class="nav-links" aria-label="ניווט">
+          <a href="/products">בנק מארזים</a>
+          <a href="/components" aria-current="page">בנק מוצרים</a>
+          <a href="/quote">יצירת הצעה</a>
+          <a href="/quotes">הצעות שמורות</a>
+        </nav>
+      </header>
+
+      <section class="panel component-bank-panel">
+        <div class="list-heading">
+          <div>
+            <h2>מוצרים קיימים</h2>
+            <p>הרשימה מסודרת לפי א-ב. אפשר לערוך פרטים ולהשתמש בבולד.</p>
+          </div>
+          <span id="componentCount">0 מוצרים</span>
+        </div>
+
+        <form class="component-form" id="componentForm">
+          <div class="field">
+            <label for="componentName">שם מוצר</label>
+            <input id="componentName" name="componentName" type="text" required placeholder="לדוגמה: דבש בוטיק 130 גרם">
+          </div>
+          <div class="field">
+            <label for="componentDefaultText">פרטים שיופיעו במארז</label>
+            <div class="formatting-toolbar" aria-label="עיצוב פרטי מוצר">
+              <button class="format-button" type="button" id="boldComponentText" title="הדגשה">
+                <strong>B</strong>
+              </button>
+            </div>
+            <textarea id="componentDefaultText" name="defaultText" rows="4" placeholder="לדוגמה: דבש **בוטיק** 130 גרם"></textarea>
+            <small class="hint">אפשר להשתמש ב-B או לכתוב **טקסט מודגש** ידנית.</small>
+          </div>
+          <div class="field">
+            <label for="componentCategory">קטגוריה</label>
+            <input id="componentCategory" name="category" type="text" placeholder="מזון / בית / מיתוג">
+          </div>
+          <div class="component-form-actions">
+            <button type="submit" id="componentSubmit">שמור מוצר</button>
+            <button class="ghost-button" type="button" id="cancelComponentEdit" hidden>בטל עריכה</button>
+          </div>
+        </form>
+
+        <p class="status" id="status" role="status"></p>
+
+        <div class="table-wrap">
+          <table class="data-table component-table">
+            <thead>
+              <tr>
+                <th>שם מוצר</th>
+                <th>פרטים למארז</th>
+                <th>קטגוריה</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody id="componentTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/components.js"></script>
+  </body>
+</html>
