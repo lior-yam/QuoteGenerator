@@ -6,7 +6,6 @@ const {
   ROOT_DIR,
   bufferToDataUri,
   createQuoteHtml,
-  generatePdfBuffer,
   localFileToDataUri,
   mimeTypeForPath
 } = require("../../src/quoteCore");
@@ -22,7 +21,6 @@ const SAVED_QUOTES_KEY = "saved-quotes.json";
 const DATA_STORE = "asufa-data";
 const IMAGE_STORE = "asufa-product-images";
 const QUOTE_STORE = "asufa-quotes";
-const MAX_SYNC_PDF_BYTES = 4.5 * 1024 * 1024;
 
 const CONTACT_DETAILS = {
   name: "אסופה - עיצוב ישראלי",
@@ -618,7 +616,6 @@ async function saveQuote(event) {
     assetToDataUri
   });
   const quoteKey = `${quoteData.quoteNumber}-${Date.now()}`;
-  let responseBody;
 
   if (isNetlifyRuntime()) {
     await store(QUOTE_STORE).set(`${quoteKey}.html`, quoteHtml, {
@@ -647,36 +644,11 @@ async function saveQuote(event) {
     await fs.writeFile(path.resolve(OUTPUT_DIR, `${quoteKey}.html`), quoteHtml, "utf8");
   }
 
-  try {
-    const pdf = await generatePdfBuffer(quoteHtml);
-
-    if (pdf.length > MAX_SYNC_PDF_BYTES) {
-      responseBody = {
-        message: "Quote generated as printable HTML because the PDF is too large for a synchronous Netlify response.",
-        pdfUrl: `/api/quotes/${encodeURIComponent(`${quoteKey}.html`)}/html`,
-        isPrintableHtml: true
-      };
-    } else {
-      if (isNetlifyRuntime()) {
-        await store(QUOTE_STORE).set(`${quoteKey}.pdf`, toArrayBuffer(pdf), {
-          metadata: { contentType: "application/pdf" }
-        });
-      } else {
-        await fs.writeFile(path.resolve(OUTPUT_DIR, `${quoteKey}.pdf`), pdf);
-      }
-
-      responseBody = {
-        message: "Quote generated.",
-        pdfUrl: `/api/quotes/${encodeURIComponent(`${quoteKey}.pdf`)}/pdf`
-      };
-    }
-  } catch (error) {
-    responseBody = {
-      message: `Quote generated as printable HTML. PDF generation failed: ${error.message}`,
-      pdfUrl: `/api/quotes/${encodeURIComponent(`${quoteKey}.html`)}/html`,
-      isPrintableHtml: true
-    };
-  }
+  const responseBody = {
+    message: "Quote generated as printable HTML.",
+    pdfUrl: `/api/quotes/${encodeURIComponent(`${quoteKey}.html`)}/html`,
+    isPrintableHtml: true
+  };
 
   const savedQuote = await upsertSavedQuote(
     quoteRecordId,

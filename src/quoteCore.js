@@ -298,85 +298,12 @@ async function createQuoteHtml({ quoteData, products, assetToDataUri = localFile
   };
 }
 
-async function launchBrowser() {
-  if (process.env.NETLIFY || process.env.AWS_EXECUTION_ENV || process.env.AWS_LAMBDA_FUNCTION_NAME) {
-    const puppeteerCore = require("puppeteer-core");
-    const { default: chromium } = await import("@sparticuz/chromium");
-
-    return puppeteerCore.launch({
-      args: chromium.args,
-      defaultViewport: { width: 1240, height: 1754, deviceScaleFactor: 1 },
-      executablePath: await chromium.executablePath(),
-      headless: "shell",
-      timeout: 60000
-    });
-  }
-
-  const localPuppeteer = require("puppeteer");
-
-  return localPuppeteer.launch({
-    headless: "new",
-    executablePath: localPuppeteer.executablePath(),
-    timeout: 60000,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage"
-    ]
-  });
-}
-
-async function generatePdfBuffer(html) {
-  const browser = await launchBrowser();
-
-  try {
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1240, height: 1754, deviceScaleFactor: 1 });
-    await page.setContent(html, { waitUntil: "networkidle0" });
-    await page.emulateMediaType("screen");
-
-    const pdf = await page.pdf({
-      format: "A4",
-      printBackground: true,
-      preferCSSPageSize: true
-    });
-
-    return Buffer.from(pdf);
-  } finally {
-    await browser.close();
-  }
-}
-
-async function generatePdfFile(html, outputPath) {
-  const pdf = await generatePdfBuffer(html);
-
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await fs.writeFile(outputPath, pdf);
-
-  return pdf;
-}
-
-async function generateQuotePdfFromFiles({ inputPath, productsPath, outputPath }) {
-  const [quoteData, products] = await Promise.all([
-    readJson(inputPath),
-    readJson(productsPath)
-  ]);
-
-  const { html } = await createQuoteHtml({ quoteData, products });
-  const pdf = await generatePdfFile(html, outputPath);
-
-  return { pdf, quoteData };
-}
-
 module.exports = {
   VAT_RATE,
   ROOT_DIR,
   bufferToDataUri,
   createQuoteHtml,
   escapeHtml,
-  generatePdfBuffer,
-  generatePdfFile,
-  generateQuotePdfFromFiles,
   localFileToDataUri,
   mimeTypeForPath,
   readJson,
