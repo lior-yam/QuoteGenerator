@@ -242,18 +242,18 @@ function quoteKeyFromPath(requestPath) {
 }
 
 async function readProducts() {
-  if (isNetlifyRuntime()) {
-    const savedProducts = await store(DATA_STORE).get(PRODUCTS_KEY, { type: "json" });
-
-    if (savedProducts) {
-      return savedProducts;
-    }
-  }
-
   const fallbackProducts = JSON.parse(await fs.readFile(PRODUCTS_PATH, "utf8"));
 
   if (isNetlifyRuntime()) {
-    await store(DATA_STORE).setJSON(PRODUCTS_KEY, fallbackProducts);
+    const savedProducts = await store(DATA_STORE).get(PRODUCTS_KEY, { type: "json" });
+
+    if (Array.isArray(savedProducts) && savedProducts.length > 0) {
+      return savedProducts;
+    }
+
+    if (fallbackProducts.length > 0) {
+      await store(DATA_STORE).setJSON(PRODUCTS_KEY, fallbackProducts);
+    }
   }
 
   return fallbackProducts;
@@ -269,18 +269,18 @@ async function writeProducts(products) {
 }
 
 async function readComponents() {
-  if (isNetlifyRuntime()) {
-    const savedComponents = await store(DATA_STORE).get(COMPONENTS_KEY, { type: "json" });
-
-    if (savedComponents) {
-      return savedComponents;
-    }
-  }
-
   const fallbackComponents = JSON.parse(await fs.readFile(COMPONENTS_PATH, "utf8"));
 
   if (isNetlifyRuntime()) {
-    await store(DATA_STORE).setJSON(COMPONENTS_KEY, fallbackComponents);
+    const savedComponents = await store(DATA_STORE).get(COMPONENTS_KEY, { type: "json" });
+
+    if (Array.isArray(savedComponents) && savedComponents.length > 0) {
+      return savedComponents;
+    }
+
+    if (fallbackComponents.length > 0) {
+      await store(DATA_STORE).setJSON(COMPONENTS_KEY, fallbackComponents);
+    }
   }
 
   return fallbackComponents;
