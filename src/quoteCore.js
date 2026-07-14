@@ -1,7 +1,27 @@
 const fs = require("fs/promises");
+const fsSync = require("fs");
 const path = require("path");
 
-const ROOT_DIR = path.resolve(__dirname, "..");
+function resolveRootDir() {
+  const candidates = [
+    path.resolve(__dirname, ".."),
+    path.resolve(__dirname, "../.."),
+    process.cwd()
+  ];
+
+  for (const candidate of candidates) {
+    if (
+      fsSync.existsSync(path.resolve(candidate, "products.json"))
+      || fsSync.existsSync(path.resolve(candidate, "templates/quote.html"))
+    ) {
+      return candidate;
+    }
+  }
+
+  return path.resolve(__dirname, "..");
+}
+
+const ROOT_DIR = resolveRootDir();
 // Update this value if the Israeli VAT rate changes.
 const VAT_RATE = 0.18;
 
