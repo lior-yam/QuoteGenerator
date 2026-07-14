@@ -33,7 +33,13 @@ const CONTACT_DETAILS = {
 };
 
 function isNetlifyRuntime() {
-  return Boolean(process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT || process.env.NETLIFY_SITE_ID);
+  return Boolean(
+    process.env.NETLIFY
+    || process.env.NETLIFY_BLOBS_CONTEXT
+    || process.env.NETLIFY_SITE_ID
+    || process.env.AWS_EXECUTION_ENV
+    || process.env.AWS_LAMBDA_FUNCTION_NAME
+  );
 }
 
 function store(name) {
