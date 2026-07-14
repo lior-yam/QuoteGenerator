@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
-const { getStore } = require("@netlify/blobs");
+const { connectLambda, getStore } = require("@netlify/blobs");
 const {
   ROOT_DIR,
   bufferToDataUri,
@@ -40,8 +40,43 @@ function isNetlifyRuntime() {
   );
 }
 
+function connectBlobContext(event) {
+  if (!event?.blobs) {
+    return;
+  }
+
+  try {
+    connectLambda(event);
+  } catch (error) {
+    // Some Netlify contexts configure Blobs automatically. If this fails, store()
+    // will still try the environment-based configuration and report a clear error.
+  }
+}
+
+function optionalStore(name) {
+  if (!isNetlifyRuntime()) {
+    return null;
+  }
+
+  try {
+    return getStore(name);
+  } catch (error) {
+    if (error.name === "MissingBlobsEnvironmentError") {
+      return null;
+    }
+
+    throw error;
+  }
+}
+
 function store(name) {
-  return getStore(name);
+  const configuredStore = optionalStore(name);
+
+  if (!configuredStore) {
+    throw new Error("Netlify Blobs storage is not configured for this deployment.");
+  }
+
+  return configuredStore;
 }
 
 function json(statusCode, data) {
@@ -243,14 +278,18 @@ async function readProducts() {
   const fallbackProducts = JSON.parse(await fs.readFile(PRODUCTS_PATH, "utf8"));
 
   if (isNetlifyRuntime()) {
-    const savedProducts = await store(DATA_STORE).get(PRODUCTS_KEY, { type: "json" });
+    const dataStore = optionalStore(DATA_STORE);
 
-    if (Array.isArray(savedProducts) && savedProducts.length > 0) {
-      return savedProducts;
-    }
+    if (dataStore) {
+      const savedProducts = await dataStore.get(PRODUCTS_KEY, { type: "json" });
 
-    if (fallbackProducts.length > 0) {
-      await store(DATA_STORE).setJSON(PRODUCTS_KEY, fallbackProducts);
+      if (Array.isArray(savedProducts) && savedProducts.length > 0) {
+        return savedProducts;
+      }
+
+      if (fallbackProducts.length > 0) {
+        await dataStore.setJSON(PRODUCTS_KEY, fallbackProducts);
+      }
     }
   }
 
@@ -270,14 +309,18 @@ async function readComponents() {
   const fallbackComponents = JSON.parse(await fs.readFile(COMPONENTS_PATH, "utf8"));
 
   if (isNetlifyRuntime()) {
-    const savedComponents = await store(DATA_STORE).get(COMPONENTS_KEY, { type: "json" });
+    const dataStore = optionalStore(DATA_STORE);
 
-    if (Array.isArray(savedComponents) && savedComponents.length > 0) {
-      return savedComponents;
-    }
+    if (dataStore) {
+      const savedComponents = await dataStore.get(COMPONENTS_KEY, { type: "json" });
 
-    if (fallbackComponents.length > 0) {
-      await store(DATA_STORE).setJSON(COMPONENTS_KEY, fallbackComponents);
+      if (Array.isArray(savedComponents) && savedComponents.length > 0) {
+        return savedComponents;
+      }
+
+      if (fallbackComponents.length > 0) {
+        await dataStore.setJSON(COMPONENTS_KEY, fallbackComponents);
+      }
     }
   }
 
@@ -295,10 +338,14 @@ async function writeComponents(components) {
 
 async function readSavedQuotes() {
   if (isNetlifyRuntime()) {
-    const savedQuotes = await store(DATA_STORE).get(SAVED_QUOTES_KEY, { type: "json" });
+    const dataStore = optionalStore(DATA_STORE);
 
-    if (savedQuotes) {
-      return savedQuotes;
+    if (dataStore) {
+      const savedQuotes = await dataStore.get(SAVED_QUOTES_KEY, { type: "json" });
+
+      if (savedQuotes) {
+        return savedQuotes;
+      }
     }
   }
 
@@ -306,7 +353,11 @@ async function readSavedQuotes() {
     const fallbackQuotes = JSON.parse(await fs.readFile(SAVED_QUOTES_PATH, "utf8"));
 
     if (isNetlifyRuntime()) {
-      await store(DATA_STORE).setJSON(SAVED_QUOTES_KEY, fallbackQuotes);
+      const dataStore = optionalStore(DATA_STORE);
+
+      if (dataStore) {
+        await dataStore.setJSON(SAVED_QUOTES_KEY, fallbackQuotes);
+      }
     }
 
     return fallbackQuotes;
@@ -686,6 +737,8 @@ async function serveQuoteFile(fileKey, type) {
 
 exports.handler = async (event) => {
   try {
+    connectBlobContext(event);
+
     const requestPath = apiPath(event);
     const productMatch = /^\/products\/([^/]+)$/.exec(requestPath);
     const componentMatch = /^\/components\/([^/]+)$/.exec(requestPath);
