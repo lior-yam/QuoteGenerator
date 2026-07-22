@@ -93,15 +93,6 @@ function sharedQuantityValue() {
   return Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1;
 }
 
-function syncSelectedQuantities() {
-  const quantity = sharedQuantityValue();
-
-  selectedProducts = selectedProducts.map((item) => ({
-    ...item,
-    quantity
-  }));
-}
-
 function selectedNotes() {
   const presetNotes = defaultNoteInputs
     .filter((input) => input.checked)
@@ -177,7 +168,6 @@ function renderPackageOptions() {
 }
 
 function renderSelectedProducts() {
-  syncSelectedQuantities();
   selectedCount.textContent = `${selectedProducts.length} נבחרו`;
 
   if (!selectedProducts.length) {
@@ -197,9 +187,9 @@ function renderSelectedProducts() {
               <h3>מארז שלא נמצא בבנק</h3>
               <p>המארז המקורי כבר לא קיים בבנק. אפשר להסיר אותו מההצעה.</p>
             </div>
-            <div class="quantity-badge">
-              <span>כמות</span>
-              <strong>${item.quantity}</strong>
+            <div class="quantity-editor">
+              <label for="quantity-${index}">כמות</label>
+              <input id="quantity-${index}" type="number" min="1" step="1" value="${item.quantity}" data-quantity-index="${index}">
             </div>
             <button class="remove-button" type="button" data-remove-index="${index}">הסר</button>
           </article>
@@ -214,9 +204,9 @@ function renderSelectedProducts() {
             ${descriptionList(product.shortDescription)}
             <strong>${formatIls(product.unitPrice)}</strong>
           </div>
-          <div class="quantity-badge">
-            <span>כמות</span>
-            <strong>${item.quantity}</strong>
+          <div class="quantity-editor">
+            <label for="quantity-${index}">כמות</label>
+            <input id="quantity-${index}" type="number" min="1" step="1" value="${item.quantity}" data-quantity-index="${index}">
           </div>
           <button class="remove-button" type="button" data-remove-index="${index}">הסר</button>
         </article>
@@ -266,10 +256,16 @@ function applyQuoteToForm(quote, mode) {
   shippingQuantity.value = Math.floor(Number(savedShipping?.quantity) || 1);
   shippingUnitPrice.value = Number(savedShipping?.unitPrice ?? savedShipping?.price ?? "") || "";
   sharedQuantity.value = Math.floor(Number(firstQuantity) || 1);
-  selectedProducts = savedProducts.map((item) => ({
-    id: String(item.id || "").trim(),
-    quantity: sharedQuantityValue()
-  })).filter((item) => item.id);
+  selectedProducts = savedProducts
+    .map((item) => {
+      const quantity = Number(item.quantity);
+
+      return {
+        id: String(item.id || "").trim(),
+        quantity: Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : sharedQuantityValue()
+      };
+    })
+    .filter((item) => item.id);
 
   applyNotesToForm(quote.notes);
   renderSelectedProducts();
@@ -333,7 +329,7 @@ function quotePayload() {
     shippingLines: selectedShippingLines(),
     selectedProducts: selectedProducts.map((item) => ({
       id: item.id,
-      quantity: sharedQuantityValue()
+      quantity: item.quantity
     }))
   };
 }
@@ -358,7 +354,29 @@ packageSearch.addEventListener("input", renderPackageOptions);
 addPackage.addEventListener("click", addSelectedPackage);
 
 sharedQuantity.addEventListener("input", () => {
+  const quantity = sharedQuantityValue();
+
+  selectedProducts = selectedProducts.map((item) => ({
+    ...item,
+    quantity
+  }));
   renderSelectedProducts();
+});
+
+selectedList.addEventListener("input", (event) => {
+  const index = Number(event.target.dataset.quantityIndex);
+
+  if (!Number.isInteger(index)) {
+    return;
+  }
+
+  const quantity = Number(event.target.value);
+
+  if (!Number.isFinite(quantity) || quantity <= 0 || !selectedProducts[index]) {
+    return;
+  }
+
+  selectedProducts[index].quantity = Math.floor(quantity);
 });
 
 selectedList.addEventListener("click", (event) => {

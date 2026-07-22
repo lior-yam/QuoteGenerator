@@ -343,26 +343,37 @@ button:disabled {
   padding: 9px 10px;
 }
 
-.quantity-badge {
+.quantity-editor {
   display: grid;
-  place-items: center;
+  gap: 5px;
   min-height: 54px;
   border: 1px solid #e2dbd1;
   border-radius: 6px;
   background: #f8f4ee;
+  padding: 8px;
   text-align: center;
 }
 
-.quantity-badge span {
+.quantity-editor label {
+  margin: 0;
   color: #756c63;
   font-size: 12px;
   font-weight: 700;
 }
 
-.quantity-badge strong {
+.quantity-editor input {
+  min-height: 34px;
+  padding: 6px;
   color: #25211d;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 800;
   line-height: 1;
+  text-align: center;
+}
+
+.quantity-editor input::-webkit-outer-spin-button,
+.quantity-editor input::-webkit-inner-spin-button {
+  margin: 0;
 }
 
 .remove-button {

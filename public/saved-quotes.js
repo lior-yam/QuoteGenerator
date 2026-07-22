@@ -49,12 +49,17 @@ function quoteSearchText(quote) {
 function packageSummary(quote) {
   const rows = Array.isArray(quote.selectedProducts) ? quote.selectedProducts : [];
   const quantity = rows[0]?.quantity;
+  const hasMixedQuantities = rows.some((row) => row.quantity !== quantity);
 
   if (!rows.length) {
     return "אין מארזים";
   }
 
-  return quantity ? `${rows.length} סוגים, כמות ${quantity}` : `${rows.length} סוגים`;
+  if (!quantity) {
+    return `${rows.length} סוגים`;
+  }
+
+  return hasMixedQuantities ? `${rows.length} סוגים, כמויות שונות` : `${rows.length} סוגים, כמות ${quantity}`;
 }
 
 function actionLink(href, label, className = "") {
