@@ -11,6 +11,13 @@
     "תוקף ההצעה 14 יום.",
     "משלוח למשרדים - חינם"
   ],
+  "shippingLines": [
+    {
+      "shippingName": "משלוח למשרדים בגוש דן",
+      "quantity": 1,
+      "unitPrice": 0
+    }
+  ],
   "selectedProducts": [
     {
       "id": "package-1783951133762-d52da2",

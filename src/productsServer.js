@@ -209,6 +209,43 @@ function normalizeNotes(notes) {
     .filter(Boolean);
 }
 
+function normalizeShippingLines(shippingLines) {
+  if (!Array.isArray(shippingLines)) {
+    return [];
+  }
+
+  return shippingLines
+    .map((shippingLine) => {
+      const shippingName = String(
+        shippingLine.shippingName
+        || shippingLine.method
+        || shippingLine.name
+        || "משלוח"
+      ).trim();
+      const quantity = Number(shippingLine.quantity || 1);
+      const unitPrice = Number(shippingLine.unitPrice ?? shippingLine.price ?? 0);
+
+      if (!shippingName && unitPrice <= 0) {
+        return null;
+      }
+
+      if (!Number.isFinite(quantity) || quantity <= 0) {
+        throw new Error("Shipping quantity must be a positive number.");
+      }
+
+      if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+        throw new Error("Shipping price must be zero or a positive number.");
+      }
+
+      return {
+        shippingName: shippingName || "משלוח",
+        quantity: Math.floor(quantity),
+        unitPrice: Math.round(unitPrice * 100) / 100
+      };
+    })
+    .filter(Boolean);
+}
+
 function validateQuoteInput(data) {
   const recipientCompany = String(data.recipientCompany || "").trim();
   const contactPerson = String(data.contactPerson || "").trim();
@@ -238,6 +275,7 @@ function validateQuoteInput(data) {
     quoteDate,
     showTotals: data.showTotals !== false,
     notes: normalizeNotes(data.notes),
+    shippingLines: normalizeShippingLines(data.shippingLines),
     selectedProducts: selectedProducts.map((item) => ({
       id: String(item.id || "").trim(),
       quantity: Number(item.quantity)
@@ -267,6 +305,7 @@ function savedQuoteRecord(id, quoteData, existingQuote, pdfUrl) {
     quoteDate: quoteData.quoteDate,
     showTotals: quoteData.showTotals,
     notes: quoteData.notes,
+    shippingLines: quoteData.shippingLines,
     selectedProducts: quoteData.selectedProducts,
     pdfUrl
   };

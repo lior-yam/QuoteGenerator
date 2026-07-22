@@ -11,6 +11,9 @@ const showTotals = document.querySelector("#showTotals");
 const packageSearch = document.querySelector("#packageSearch");
 const packageSelect = document.querySelector("#packageSelect");
 const sharedQuantity = document.querySelector("#sharedQuantity");
+const shippingName = document.querySelector("#shippingName");
+const shippingQuantity = document.querySelector("#shippingQuantity");
+const shippingUnitPrice = document.querySelector("#shippingUnitPrice");
 const addPackage = document.querySelector("#addPackage");
 const selectedList = document.querySelector("#selectedList");
 const selectedCount = document.querySelector("#selectedCount");
@@ -110,6 +113,33 @@ function selectedNotes() {
     .filter(Boolean);
 
   return [...presetNotes, ...customNotes];
+}
+
+function shippingQuantityValue() {
+  const quantity = Number(shippingQuantity.value || 1);
+
+  return Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1;
+}
+
+function shippingUnitPriceValue() {
+  const unitPrice = Number(shippingUnitPrice.value || 0);
+
+  return Number.isFinite(unitPrice) && unitPrice >= 0 ? unitPrice : 0;
+}
+
+function selectedShippingLines() {
+  const name = shippingName.value.trim();
+  const unitPrice = shippingUnitPriceValue();
+
+  if (!name && unitPrice <= 0) {
+    return [];
+  }
+
+  return [{
+    shippingName: name || "משלוח",
+    quantity: shippingQuantityValue(),
+    unitPrice
+  }];
 }
 
 function applyNotesToForm(quoteNotes) {
@@ -230,6 +260,11 @@ function applyQuoteToForm(quote, mode) {
   customerEmail.value = quote.customerEmail || "";
   quoteDate.value = quote.quoteDate || quoteDate.value;
   showTotals.checked = quote.showTotals !== false;
+  const savedShipping = Array.isArray(quote.shippingLines) ? quote.shippingLines[0] : null;
+
+  shippingName.value = savedShipping?.shippingName || savedShipping?.method || savedShipping?.name || "";
+  shippingQuantity.value = Math.floor(Number(savedShipping?.quantity) || 1);
+  shippingUnitPrice.value = Number(savedShipping?.unitPrice ?? savedShipping?.price ?? "") || "";
   sharedQuantity.value = Math.floor(Number(firstQuantity) || 1);
   selectedProducts = savedProducts.map((item) => ({
     id: String(item.id || "").trim(),
@@ -295,6 +330,7 @@ function quotePayload() {
     quoteDate: quoteDate.value,
     notes: selectedNotes(),
     showTotals: showTotals.checked,
+    shippingLines: selectedShippingLines(),
     selectedProducts: selectedProducts.map((item) => ({
       id: item.id,
       quantity: sharedQuantityValue()

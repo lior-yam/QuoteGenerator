@@ -39,7 +39,7 @@ body {
 .page {
   width: 210mm;
   min-height: 297mm;
-  padding: 12mm 14mm;
+  padding: 10mm 13mm;
   background:
     linear-gradient(90deg, rgba(37, 33, 29, 0.05) 0 1px, transparent 1px 100%),
     #fbfaf7;
@@ -57,7 +57,7 @@ body {
 }
 
 .quote-header {
-  padding-bottom: 6mm;
+  padding-bottom: 5mm;
   border-bottom: 1px solid #d8d0c4;
 }
 
@@ -116,7 +116,7 @@ body {
 }
 
 .hero {
-  padding: 7mm 0 6mm;
+  padding: 5mm 0 4mm;
 }
 
 .eyebrow {
@@ -198,15 +198,15 @@ td {
 }
 
 .image-column {
-  width: 23%;
+  width: 27%;
 }
 
 .package-column {
-  width: 19%;
+  width: 17%;
 }
 
 .description-column {
-  width: 27%;
+  width: 25%;
 }
 
 .quantity-column {
@@ -225,9 +225,9 @@ td {
 
 .product-image {
   width: 36mm;
-  height: 36mm;
+  height: auto;
   display: block;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 6px;
   border: 1px solid #ded7cd;
   background: #f3efe7;
@@ -235,9 +235,28 @@ td {
 
 .product-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.shipping-row td {
+  background: #fbfaf7;
+}
+
+.shipping-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26mm;
+  min-height: 9mm;
+  padding: 1.5mm 3mm;
+  border: 1px solid #ded7cd;
+  border-radius: 6px;
+  background: #f3efe7;
+  color: #5b524b;
+  font-size: 8pt;
+  font-weight: 700;
 }
 
 .product-name {
@@ -271,19 +290,19 @@ td {
 }
 
 .summary-section {
-  margin-top: 5mm;
+  margin-top: 4mm;
   break-inside: avoid;
   page-break-inside: avoid;
 }
 
 .summary-section.no-totals .notes {
-  min-height: 35mm;
+  min-height: 30mm;
 }
 
 .notes {
   flex: 1;
   min-width: 0;
-  min-height: 27mm;
+  min-height: 22mm;
   padding: 4mm 5mm;
   break-inside: avoid;
   page-break-inside: avoid;
@@ -378,8 +397,8 @@ td {
 }
 
 .quote-footer {
-  margin-top: 5mm;
-  padding: 4mm 5mm;
+  margin-top: 4mm;
+  padding: 3.5mm 5mm;
   align-items: center;
   break-inside: avoid;
   page-break-inside: avoid;

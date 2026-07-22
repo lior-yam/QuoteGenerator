@@ -81,6 +81,31 @@
             <div class="empty-state">עדיין לא נבחרו מארזים להצעה.</div>
           </div>
 
+          <section class="shipping-panel" aria-label="משלוח להצעה">
+            <h3>משלוח</h3>
+            <div class="shipping-grid">
+              <div class="field">
+                <label for="shippingName">סוג משלוח</label>
+                <input id="shippingName" name="shippingName" type="text" list="shippingOptions" placeholder="למשל: משלוח למשרדים בגוש דן">
+                <datalist id="shippingOptions">
+                  <option value="משלוח למשרדים בגוש דן"></option>
+                  <option value="משלוח מחוץ לגוש דן"></option>
+                  <option value="שליחות מיוחדת"></option>
+                  <option value="איסוף עצמי"></option>
+                </datalist>
+              </div>
+              <div class="field">
+                <label for="shippingQuantity">כמות</label>
+                <input id="shippingQuantity" name="shippingQuantity" type="number" min="1" step="1" value="1">
+              </div>
+              <div class="field">
+                <label for="shippingUnitPrice">מחיר לפני מע״מ</label>
+                <input id="shippingUnitPrice" name="shippingUnitPrice" type="number" min="0" step="0.01" placeholder="0">
+              </div>
+            </div>
+            <small class="hint">אם אין משלוח, אפשר להשאיר את השדות ריקים. שורת המשלוח תופיע מתחת לכל המארזים.</small>
+          </section>
+
           <div class="field notes-field">
             <label for="notes">הערות להצעה</label>
             <div class="notes-options" aria-label="הערות לבחירה">

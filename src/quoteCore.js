@@ -132,6 +132,42 @@ function buildQuoteItems(quoteData, products) {
   });
 }
 
+function buildShippingItems(quoteData) {
+  const shippingLines = Array.isArray(quoteData.shippingLines) ? quoteData.shippingLines : [];
+
+  return shippingLines
+    .map((shippingLine) => {
+      const shippingName = String(
+        shippingLine.shippingName
+        || shippingLine.method
+        || shippingLine.name
+        || "משלוח"
+      ).trim();
+      const quantity = Number(shippingLine.quantity || 1);
+      const unitPrice = Number(shippingLine.unitPrice ?? shippingLine.price ?? 0);
+
+      if (!shippingName && unitPrice <= 0) {
+        return null;
+      }
+
+      if (!Number.isFinite(quantity) || quantity <= 0) {
+        throw new Error("Invalid shipping quantity.");
+      }
+
+      if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+        throw new Error("Invalid shipping price.");
+      }
+
+      return {
+        shippingName: shippingName || "משלוח",
+        quantity,
+        unitPrice,
+        rowTotal: unitPrice * quantity
+      };
+    })
+    .filter(Boolean);
+}
+
 function descriptionItems(description) {
   return String(description || "")
     .split(/\r?\n/)
@@ -188,6 +224,27 @@ async function buildProductRows(items, assetToDataUri) {
   );
 
   return rows.join("");
+}
+
+function buildShippingRows(items) {
+  if (!items.length) {
+    return "";
+  }
+
+  return items
+    .map((item) => `
+      <tr class="shipping-row">
+        <td>
+          <span class="shipping-label">משלוח</span>
+        </td>
+        <td class="product-name">משלוח</td>
+        <td class="short-description">${escapeHtml(item.shippingName)}</td>
+        <td class="numeric">${item.quantity}</td>
+        <td class="numeric">${formatIls(item.unitPrice)}</td>
+        <td class="numeric">${formatIls(item.rowTotal)}</td>
+      </tr>
+    `)
+    .join("");
 }
 
 function buildNotesBlock(notes) {
@@ -267,8 +324,8 @@ function buildOptionalCustomerPhone(customerPhone) {
   `;
 }
 
-function calculateTotals(items) {
-  const subtotal = items.reduce((sum, item) => sum + item.rowTotal, 0);
+function calculateTotals(items, shippingItems = []) {
+  const subtotal = [...items, ...shippingItems].reduce((sum, item) => sum + item.rowTotal, 0);
   const vat = subtotal * VAT_RATE;
 
   return {
@@ -290,7 +347,8 @@ async function createQuoteHtml({ quoteData, products, assetToDataUri = localFile
   validateQuoteData(quoteData);
 
   const items = buildQuoteItems(quoteData, products);
-  const totals = calculateTotals(items);
+  const shippingItems = buildShippingItems(quoteData);
+  const totals = calculateTotals(items, shippingItems);
 
   const [template, css, logoSrc, productRows] = await Promise.all([
     fs.readFile(path.resolve(ROOT_DIR, "templates/quote.html"), "utf8"),
@@ -298,6 +356,7 @@ async function createQuoteHtml({ quoteData, products, assetToDataUri = localFile
     assetToDataUri("assets/asufa-logo.png"),
     buildProductRows(items, assetToDataUri)
   ]);
+  const quoteRows = `${productRows}${buildShippingRows(shippingItems)}`;
 
   const contactDetails = quoteData.contactDetails || {};
 
@@ -312,7 +371,7 @@ async function createQuoteHtml({ quoteData, products, assetToDataUri = localFile
       RECIPIENT_PHONE_BLOCK: buildOptionalCustomerPhone(quoteData.customerPhone),
       RECIPIENT_EMAIL_BLOCK: buildOptionalCustomerEmail(quoteData.customerEmail),
       QUOTE_DATE: escapeHtml(formatDate(quoteData.quoteDate)),
-      PRODUCT_ROWS: productRows,
+      PRODUCT_ROWS: quoteRows,
       NOTES_BLOCK: buildNotesBlock(quoteData.notes),
       SUMMARY_CLASS: quoteData.showTotals === false ? "no-totals" : "",
       TOTALS_BLOCK: buildTotalsBlock(totals, quoteData.showTotals !== false),
@@ -323,6 +382,7 @@ async function createQuoteHtml({ quoteData, products, assetToDataUri = localFile
       CONTACT_WEBSITE: escapeHtml(contactDetails.website || "")
     }),
     items,
+    shippingItems,
     totals
   };
 }
